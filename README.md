@@ -1,4 +1,7 @@
-# Automated Ransomware Canary Defense & In-Memory SOAR Triage
+﻿> This scenario is now maintained as part of the consolidated [Active Directory Threat Detection & Response Lab](https://github.com/LeeHoang26/ad-threat-detection-and-response-lab).
+>
+> This repository remains available as the historical standalone version. For the current portfolio structure, start with the consolidated repository.
+># Automated Ransomware Canary Defense & In-Memory SOAR Triage
 
 A detection engineering and incident response lab exploring proactive ransomware detection using decoy canary files and automated volatile memory collection via Wazuh Active Response.
 
@@ -162,19 +165,19 @@ Verification of captured forensic artifacts and detailed triage log (`triage_exe
 
 ```text
 canary-ransomware-triage/
-├── assets/                    # Verification screenshots and event logs
-├── simulator/
-│   └── ransomware_sim.ps1     # Safe directory encryption simulator
-├── sysmon/
-│   └── sysmon_canary_config.xml # Sysmon Event 11 canary filter rule
-├── triage/
-│   ├── canary-triage.cmd      # Wazuh Active Response batch wrapper
-│   └── triage_soar_handler.ps1 # Suspend -> ProcDump -> Terminate triage handler
-├── wazuh/
-│   ├── local_rules.xml        # Wazuh detection rule 100200
-│   └── ossec.conf.snippet     # Active response configuration snippet
-├── .gitignore                 # Excludes raw .dmp files and memory artifacts
-└── README.md                  # Project documentation
+â”œâ”€â”€ assets/                    # Verification screenshots and event logs
+â”œâ”€â”€ simulator/
+â”‚   â””â”€â”€ ransomware_sim.ps1     # Safe directory encryption simulator
+â”œâ”€â”€ sysmon/
+â”‚   â””â”€â”€ sysmon_canary_config.xml # Sysmon Event 11 canary filter rule
+â”œâ”€â”€ triage/
+â”‚   â”œâ”€â”€ canary-triage.cmd      # Wazuh Active Response batch wrapper
+â”‚   â””â”€â”€ triage_soar_handler.ps1 # Suspend -> ProcDump -> Terminate triage handler
+â”œâ”€â”€ wazuh/
+â”‚   â”œâ”€â”€ local_rules.xml        # Wazuh detection rule 100200
+â”‚   â””â”€â”€ ossec.conf.snippet     # Active response configuration snippet
+â”œâ”€â”€ .gitignore                 # Excludes raw .dmp files and memory artifacts
+â””â”€â”€ README.md                  # Project documentation
 ```
 
 ---
@@ -188,3 +191,4 @@ canary-ransomware-triage/
 1. **Canary Placement Strategy:** In this POC, the canary file is placed on the local Desktop. In enterprise environments, canary files are systematically distributed across high-value network shares (SMB/NFS), common user documents folders, and structured with early alphabetical indices (`!_...`) via Group Policy Objects (GPO).
 2. **Detection Latency & File System Activity:** The roundtrip latency between Sysmon event generation, SIEM rule correlation, and Active Response dispatch takes approximately 1 to 3 seconds. While advanced ransomware with parallel I/O may encrypt preceding files, freezing the process halts subsequent damage and preserves volatile keys before heap zeroization.
 3. **Storage & Dump Management:** ProcDump `-ma` captures full process address space. In production SOAR playbooks, memory dumps should be staged to dedicated high-speed triage storage or streamed over an isolated out-of-band forensics network to prevent local disk exhaustion.
+
